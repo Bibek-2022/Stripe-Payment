@@ -13,14 +13,11 @@ function App() {
   const [product] = React.useState({
     name: "Tesla Roadster",
     price: 64998.67,
-    description: "Cool car"
+    description: "Cool car",
   });
 
   async function handleToken(token, addresses) {
-    const response = await axios.post(
-      "https://ry7v05l6on.sse.codesandbox.io/checkout",
-      { token, product }
-    );
+    const response = await axios.post("/checkout", { token, product });
     const { status } = response.data;
     console.log("Response:", response.data);
     if (status === "success") {
@@ -29,21 +26,58 @@ function App() {
       toast("Something went wrong", { type: "error" });
     }
   }
+  const photos = [
+    {
+      src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707778.jpg?k=56ba0babbcbbfeb3d3e911728831dcbc390ed2cb16c51d88159f82bf751d04c6&o=&hp=1",
+    },
+    {
+      src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707367.jpg?k=cbacfdeb8404af56a1a94812575d96f6b80f6740fd491d02c6fc3912a16d8757&o=&hp=1",
+    },
+    {
+      src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261708745.jpg?k=1aae4678d645c63e0d90cdae8127b15f1e3232d4739bdf387a6578dc3b14bdfd&o=&hp=1",
+    },
+    {
+      src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707776.jpg?k=054bb3e27c9e58d3bb1110349eb5e6e24dacd53fbb0316b9e2519b2bf3c520ae&o=&hp=1",
+    },
+    {
+      src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261708693.jpg?k=ea210b4fa329fe302eab55dd9818c0571afba2abd2225ca3a36457f9afa74e94&o=&hp=1",
+    },
+    {
+      src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707389.jpg?k=52156673f9eb6d5d99d3eed9386491a0465ce6f3b995f005ac71abc192dd5827&o=&hp=1",
+    },
+  ];
 
   return (
     <div className="container">
-      <div className="product">
-        <h1>{product.name}</h1>
-        <h3>On Sale · ${product.price}</h3>
+      <div className="heading">
+        <h1>Buy This Hot Property</h1>
       </div>
-      <StripeCheckout
-        stripeKey="pk_test_4TbuO6qAW2XPuce1Q6ywrGP200NrDZ2233"
-        token={handleToken}
-        amount={product.price * 100}
-        name="Tesla Roadster"
-        billingAddress
-        shippingAddress
-      />
+      {photos.map((photo, i) => (
+        <div className="hotelImgWrapper" key={i}>
+          <div className="ch1">
+            <img src={photo.src} alt="" className="hotelImg" />{" "}
+            <StripeCheckout
+              stripeKey="pk_test_51LAXeAFLFde1l2ySERkcdW8oFelbAL3VncBDXuGvBaQ5EISwcrLyQ523nnQQ7G3hd951DCaXg2OaK9vZd9FhT3CD00uh33Ds09"
+              token={handleToken}
+              amount={product.price * 100}
+              name="Tesla Roadster"
+              billingAddress
+              shippingAddress
+            />
+          </div>
+          <div className="ch1">
+            <img src={photo.src} alt="" className="hotelImg" />{" "}
+            <StripeCheckout
+              stripeKey="pk_test_51LAXeAFLFde1l2ySERkcdW8oFelbAL3VncBDXuGvBaQ5EISwcrLyQ523nnQQ7G3hd951DCaXg2OaK9vZd9FhT3CD00uh33Ds09"
+              token={handleToken}
+              amount={product.price * 100}
+              name="Tesla Roadster"
+              billingAddress
+              shippingAddress
+            />
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
